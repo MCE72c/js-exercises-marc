@@ -87,14 +87,59 @@
                 console.log("DATA", data)
 
 
-                console.log("---------------------")
-                console.log("PART 1...")
+// PART 1
+console.log("Date Generated:", data.properties.updated)
+console.log("Number of Periods:", data.properties.periods.length)
 
+var daytimePeriods = data.properties.periods.filter(p => p.isDaytime)
+console.log("Daytime Periods:", daytimePeriods.length)
 
+daytimePeriods.forEach(p => {
+    console.log(`${p.name}: ${p.temperature}${degreeSymbol}${p.temperatureUnit} — ${p.shortForecast || p.detailedForecast}`)
+})
 
+// PART 2
+var displayDate = document.getElementById("display-date")
+var displayForecast = document.getElementById("display-forecast")
 
-                console.log("---------------------")
-                console.log("PART 2...")
+displayDate.textContent = data.properties.updated
+
+// Create header row
+var headerRow = document.createElement("tr")
+;["Period", "Temperature", "Forecast", "Icon"].forEach(h => {
+    var th = document.createElement("th")
+    th.textContent = h
+    headerRow.appendChild(th)
+})
+displayForecast.appendChild(headerRow)
+
+// Add forecast rows
+daytimePeriods.forEach(p => {
+    var row = document.createElement("tr")
+
+    var periodCell = document.createElement("td")
+    periodCell.textContent = p.name
+    row.appendChild(periodCell)
+
+    var tempCell = document.createElement("td")
+    tempCell.textContent = `${p.temperature}${degreeSymbol}${p.temperatureUnit}`
+    row.appendChild(tempCell)
+
+    var forecastCell = document.createElement("td")
+    forecastCell.textContent = p.shortForecast || p.detailedForecast
+    row.appendChild(forecastCell)
+
+    var iconCell = document.createElement("td")
+    var img = document.createElement("img")
+    img.src = p.icon
+    img.alt = "icon"
+    img.height = 40
+    iconCell.appendChild(img)
+    row.appendChild(iconCell)
+
+    displayForecast.appendChild(row)
+})
+
 
 
 

@@ -80,16 +80,44 @@
             console.log("DATA:", data)
             var products = data
 
-            console.log("---------------------")
-            console.log("PART 1...")
+// PART 1
+console.log("Total Products:", products.length)
+
+products.forEach(p => {
+    let name = p["product_name"]
+    let price = formatUSD(parseFloat(p["price"]))
+    console.log(`${name} - ${price}`)
+})
+
+let departments = []
+products.forEach(p => {
+    let dept = p["department"]
+    if (!departments.includes(dept)) {
+        departments.push(dept)
+    }
+})
+console.log("Departments:", departments.length)
+departments.forEach(d => {
+    console.log(d.toUpperCase())
+})
+
+let beverages = products.filter(p => p["department"] === "beverages")
+console.log("Beverage Products:", beverages.length)
+
+let avgPrice = d3.mean(beverages, p => parseFloat(p["price"]))
+console.log("Avg Beverage Price:", formatUSD(avgPrice))
 
 
+// PART 2
+let sorted = products.sort((a, b) => d3.ascending(a["product_name"], b["product_name"]))
 
+let ul = document.getElementById("display-groceries")
+sorted.forEach(p => {
+    let li = document.createElement("li")
+    li.textContent = `${p["product_name"]} - ${formatUSD(parseFloat(p["price"]))}`
+    ul.appendChild(li)
+})
 
-
-
-            console.log("---------------------")
-            console.log("PART 2...")
 
 
 

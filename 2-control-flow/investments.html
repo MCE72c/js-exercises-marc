@@ -56,23 +56,54 @@
         }
 
         console.log("---------------------")
-        console.log("PART 1...")
+console.log("PART 1...")
+
+var initialBalance = 150000
+var targetBalance = 1000000
+var rate = 0.08
+var years = 0
+var balance = initialBalance
+
+while (balance < targetBalance) {
+    balance *= (1 + rate)
+    years += 1
+}
+
+console.log("Initial Balance:", formatUSD(initialBalance))
+console.log("Years to Reach $1M:", years)
+console.log("Final Balance:", formatUSD(balance))
 
 
+console.log("---------------------")
+console.log("PART 2...")
+
+var initialBalance2 = 150000
+var targetBalance2 = 1000000
+var mean = 0.08
+var stddev = 0.15
+
+var balance2 = initialBalance2
+var years2 = 0
+var randomReturn = d3.randomNormal(mean, stddev)
+var ratesUsed = []
+
+while (balance2 < targetBalance2) {
+    var rate2 = randomReturn()
+    ratesUsed.push(rate2)
+    balance2 *= (1 + rate2)
+    years2 += 1
+}
+
+console.log("Initial Balance:", formatUSD(initialBalance2))
+console.log("Years to Reach $1M:", years2)
+console.log("Final Balance:", formatUSD(balance2))
+console.log("Annual Returns Used:", ratesUsed.map(r => `${(r * 100).toFixed(2)}%`).join(", "))
 
 
+console.log("---------------------")
+console.log("PART 3...")
+// To be implemented
 
-
-        console.log("---------------------")
-        console.log("PART 2...")
-
-
-
-
-
-
-        console.log("---------------------")
-        console.log("PART 3...")
 
 
 

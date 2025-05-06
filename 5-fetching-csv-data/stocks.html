@@ -91,15 +91,42 @@
         d3.csv(requestUrl).then(function(data) {
             console.log("DATA:", data)
 
-            console.log("---------------------")
-            console.log("PART 1...")
+// --- PART 1 ---
+console.log("---------------------")
+console.log("PART 1...")
+
+// Total number of rows (days)
+console.log("Number of days:", data.length)
+
+// Convert string prices to floats
+data.forEach(row => {
+    row["adjusted_close"] = parseFloat(row["adjusted_close"])
+})
+
+// Sort rows chronologically (ascending by date)
+data.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp))
+
+// Earliest and latest days
+let earliest = data[0]
+let latest = data[data.length - 1]
+
+console.log("Earliest:", earliest.timestamp, formatUSD(earliest.adjusted_close))
+console.log("Latest:", latest.timestamp, formatUSD(latest.adjusted_close))
+
+// Percent change
+let pctChange = (latest.adjusted_close - earliest.adjusted_close) / earliest.adjusted_close
+console.log("Percent Change:", formatPct(pctChange))
 
 
+// --- PART 2 ---
+console.log("---------------------")
+console.log("PART 2...")
 
+document.getElementById("display-symbol").innerText = symbol
+document.getElementById("display-earliest").innerText = `${earliest.timestamp} (${formatUSD(earliest.adjusted_close)})`
+document.getElementById("display-latest").innerText = `${latest.timestamp} (${formatUSD(latest.adjusted_close)})`
+document.getElementById("display-pct-change").innerText = formatPct(pctChange)
 
-
-            console.log("---------------------")
-            console.log("PART 2...")
 
 
 
