@@ -49,27 +49,34 @@
 
     <script type="text/javascript">
 
-function calculateCircleArea(radius) {
-    return Math.PI * radius * radius
-}
+        console.log("---------------------")
+        console.log("PART 1...")
 
-var radius = 9
-var area = calculateCircleArea(radius)
-console.log("RADIUS:", radius)
-console.log("AREA:", area)
+        function calculateCircleArea(radius){
+            return Math.PI * radius
+        }
 
-var input = document.getElementById("input-radius")
-var button = document.getElementById("calculate")
-var display = document.getElementById("display-area")
-
-button.addEventListener("click", function(){
-    var r = parseFloat(input.value)
-    var a = calculateCircleArea(r)
-    display.innerText = a.toFixed(2)
-})
+        var radius = 9
+        console.log("RADIUS:", radius)
+        var area = calculateCircleArea(radius)
+        console.log("AREA:", area)
 
 
 
+        console.log("---------------------")
+        console.log("PART 2...")
+
+        var inputRadius = document.getElementById("input-radius")
+        var calcButton = document.getElementById("calculate")
+        var displayArea = document.getElementById("display-area")
+
+        function submitForm(params) {
+            var radius = inputRadius.value
+            var area = calculateCircleArea(radius)
+
+            displayArea.innerHTML = area
+        }
+        calcButton.addEventListener("click", submitForm, false)
 
     </script>
 </body>

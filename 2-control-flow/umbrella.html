@@ -68,22 +68,50 @@
 
     <script type="text/javascript">
 
-        console.log("---------------------")
-        console.log("PART 1...")
+// PART 1
+var isRaining = true
+var ownsUmbrella = false
 
+console.log("Is it raining?", isRaining)
+console.log("Owns an umbrella?", ownsUmbrella)
 
+if (!isRaining) {
+    console.log("Skies are clear")
+} else {
+    if (ownsUmbrella) {
+        console.log("Bring your umbrella")
+    } else {
+        console.log("Buy an umbrella")
+    }
+}
 
+// PART 2
+function advise(isRaining, ownsUmbrella) {
+    if (!isRaining) {
+        return "Skies are clear"
+    } else {
+        return ownsUmbrella ? "Bring your umbrella" : "Buy an umbrella"
+    }
+}
 
+console.log(advise(true, true))     // Bring your umbrella
+console.log(advise(true, false))    // Buy an umbrella
+console.log(advise(false, true))    // Skies are clear
+console.log(advise(false, false))   // Skies are clear
 
-        console.log("---------------------")
-        console.log("PART 2...")
+// PART 3
+var rainingCheckbox = document.getElementById("switch-raining")
+var umbrellaCheckbox = document.getElementById("switch-umbrella")
+var adviseButton = document.getElementById("advise")
+var display = document.getElementById("display-message")
 
+adviseButton.addEventListener("click", function() {
+    var isRaining = rainingCheckbox.checked
+    var ownsUmbrella = umbrellaCheckbox.checked
+    var message = advise(isRaining, ownsUmbrella)
+    display.innerText = message
+})
 
-
-
-
-        console.log("---------------------")
-        console.log("PART 3...")
 
 
 

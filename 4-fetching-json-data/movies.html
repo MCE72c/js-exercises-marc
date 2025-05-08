@@ -83,55 +83,66 @@
                 console.log("DATA", data)
 
 
-                console.log("Number of Movies:", data.length)
+                console.log("---------------------")
+                console.log("PART 1...")
 
-data.forEach(movie => {
-    console.log(`${movie.title} (${movie.year})`)
-})
+                console.log("MOVIES:", data.length)
 
-var highestRated = data.reduce((best, current) => {
-    return (current.rating > best.rating) ? current : best
-}, data[0])
+                data.forEach(movie => {
+                    console.log("...", movie["Title"], movie["Year"])
+                })
 
-console.log("Highest Rated Movie:", highestRated.title, "-", highestRated.rating)
-
-
-// PART 2
-var selectEl = document.getElementById("select-movie")
-var titleEl = document.getElementById("display-title")
-var yearEl = document.getElementById("display-year")
-var ratingEl = document.getElementById("display-rating")
-var imageContainer = document.getElementById("image-container")
-
-data.forEach(movie => {
-    var option = document.createElement("option")
-    option.value = movie.id
-    option.textContent = movie.title
-    selectEl.appendChild(option)
-})
-
-function updateMovieInfo() {
-    var selectedId = selectEl.value
-    var movie = data.find(m => m.id == selectedId)
-    if (!movie) return
-
-    titleEl.textContent = movie.title
-    yearEl.textContent = movie.year
-    ratingEl.textContent = movie.rating
-
-    imageContainer.innerHTML = ""
-    var img = document.createElement("img")
-    img.src = movie.poster
-    img.alt = movie.title
-    img.height = 200
-    imageContainer.appendChild(img)
-}
-
-selectEl.addEventListener("change", updateMovieInfo)
+                console.log("HIGHEST RATED:")
+                data.sort((a,b) => d3.descending(a["Rating"], b["Rating"]))
+                var highestRated = data[0]
+                console.log("... TITLE:", highestRated["Title"])
+                console.log(`... RATING: ${highestRated['Rating']} / 10`)
 
 
 
 
+                console.log("---------------------")
+                console.log("PART 2...")
+
+                var selectMovie = document.getElementById("select-movie")
+                var displayTitle = document.getElementById("display-title")
+                var displayYear = document.getElementById("display-year")
+                var displayRating = document.getElementById("display-rating")
+                var imageContainer = document.getElementById("image-container")
+
+                // sort data back in original order
+                data.sort((a,b) => d3.ascending(a["Id"], b["Id"]))
+
+                data.forEach(movie => {
+                    var option = document.createElement("option")
+                    option.value = movie.Id
+                    option.textContent = movie.Title
+
+                    selectMovie.appendChild(option)
+                })
+
+                function updateMovieInfo() {
+                    var selectedId = selectMovie.value
+                    var selectedMovie = data.find(movie => movie.Id == selectedId)
+
+                   if (selectedMovie) {
+                        displayTitle.textContent = selectedMovie.Title
+                        displayYear.textContent = selectedMovie.Year
+                        displayRating.textContent = selectedMovie.Rating
+
+                        imageContainer.innerHTML = "" // Clear any previous image
+                        var img = document.createElement("img")
+                        img.src = selectedMovie["Thumbnail Image URL"]
+                        img.alt = `Thumbnail of ${selectedMovie.Title}`
+                        imageContainer.appendChild(img)
+                   } else {
+                        displayTitle.textContent = "TODO"
+                        displayYear.textContent = "TODO"
+                        displayRating.textContent = "TODO"
+                        imageContainer.innerHTML = ""
+                   }
+                }
+                selectMovie.addEventListener("change", updateMovieInfo, false)
 
 
             })
